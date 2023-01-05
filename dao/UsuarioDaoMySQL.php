@@ -13,6 +13,7 @@ class UsuarioDaoMySQL implements UsuarioDAO {
         $sql->bindValue(':nome', $u->getNome());
         $sql->bindValue(':email', $u->getEmail());
         $sql->execute();
+        
 
         $u->setId($this->pdo->lastInsertId());//função do PDO busca o ultimo id inserido
         return $u;
@@ -86,6 +87,8 @@ class UsuarioDaoMySQL implements UsuarioDAO {
 
     }
     public function delete($id){
-
+        $sql = $this->pdo->prepare("DELETE FROM usuarios WHERE id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
     }
 }
